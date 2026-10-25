@@ -1,6 +1,6 @@
 cask "claude-usage" do
-  version "0.1.1"
-  sha256 "e1d04965781d9afdacee6ea965dfdea9d1795454093f4c729398188c26f25f32"
+  version "0.1.2"
+  sha256 "4e345d7f4bc85595e68eacdde6a24ebfaa2deb01afb75011a8694afd5d8a6f4c"
 
   url "https://github.com/biks2013-tools/claude-usage/releases/download/v#{version}/Claude-Usage-#{version}.zip"
   name "Claude Usage"
@@ -15,7 +15,7 @@ cask "claude-usage" do
   uninstall quit: "com.giorgosmarinos.claude-usage"
 
   caveats <<~EOS
-    Menu bar: open Claude Usage (gauge icon, no Dock icon). Usage is fetched only
+    Menu bar: open Claude Usage (gauge-and-spark icon, no Dock icon). Usage is fetched only
     when you open the menu or run the command.
 
     Terminal:
