@@ -1,6 +1,6 @@
 cask "claude-usage" do
-  version "0.1.0"
-  sha256 "195a0016341bd85ea8c983ed2b5f39a78e51e0937b74ced316c501badf9a53c8"
+  version "0.1.1"
+  sha256 "e1d04965781d9afdacee6ea965dfdea9d1795454093f4c729398188c26f25f32"
 
   url "https://github.com/biks2013-tools/claude-usage/releases/download/v#{version}/Claude-Usage-#{version}.zip"
   name "Claude Usage"
