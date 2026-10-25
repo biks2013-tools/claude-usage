@@ -129,6 +129,19 @@ otherwise it runs a command and exits. The cask links
   substring; runs the same `Navigator` as the menu.
 - Colours only on a terminal; errors to stderr; exit 1 on failure, 2 on bad usage.
 
+## Icon
+
+One mark, two renderings: a 270° usage gauge, two thirds full with a knob at the reading, around a
+twelve-ray spark (eight in the menu bar).
+
+- App icon: cream on a terracotta tile, drawn in code by `scripts/make-icon.swift` (Core Graphics,
+  every size from 16 to 1024 px, packed with `iconutil`). The generated `Resources/AppIcon.icns`
+  is committed; `build-app.sh` copies it into the bundle (`CFBundleIconFile`). Rerun the script
+  after changing the drawing.
+- Menu bar: `StatusIcon` draws the same mark at 18 pt as a template image (track at 35 % alpha,
+  filled part opaque), so macOS tints it for light, dark and highlighted menu bars. It is fixed:
+  it does not show the last reading, since that would go stale without polling.
+
 ## Release
 
 `scripts/package.sh`: tests, universal build, Developer ID signature with hardened runtime,
@@ -146,9 +159,11 @@ Published on GitHub `biks2013-tools/claude-usage` (public) with the tap
 | `Sources/UsageCore/Format.swift` | Titles, levels, percent, reset and duration text, money |
 | `Sources/ClaudeUsage/UsageClient.swift` | Keychain read, request, errors in plain words |
 | `Sources/ClaudeUsage/StatusController.swift` | Status item, menu, row views |
+| `Sources/ClaudeUsage/StatusIcon.swift` | Menu bar icon: the gauge-and-spark mark as a template image |
 | `Sources/ClaudeUsage/main.swift` | Command or accessory app (no Dock icon) |
 | `Sources/ClaudeUsage/CLI.swift` | The `claude-usage` command |
 | `Sources/ClaudeUsage/Sessions.swift` | Running tools, the session list, `Navigator` |
 | `Sources/ClaudeUsage/Desktops.swift` | Finding a window's desktop, switching with Mission Control |
 | `scripts/package.sh` | Notarized release zip, checksums, Homebrew cask |
 | `scripts/build-app.sh` | Universal release build, bundle, signing, install |
+| `scripts/make-icon.swift` | Draws the app icon → `Resources/AppIcon.icns` (+ a 1024 px preview) |

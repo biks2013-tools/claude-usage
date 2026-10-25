@@ -15,6 +15,11 @@
 
 ## Completed
 
+- **2026-10-25 — No icon of its own.** The app had no icon (generic in Finder and Login Items) and
+  the menu bar used a stock SF Symbol. Added a gauge-and-spark mark: the app icon drawn by
+  `scripts/make-icon.swift` (`Resources/AppIcon.icns`) and the same mark as a template menu bar
+  icon (`StatusIcon`). Released as 0.1.2.
+
 - **2026-10-25 — `claude-usage --version` printed "dev" through Homebrew's symlink.** `Bundle.main`
   is not the app when the executable is reached through `/opt/homebrew/bin/claude-usage`; the version
   is now read from the bundle of the resolved executable. Released as 0.1.1. Also: newer Homebrew

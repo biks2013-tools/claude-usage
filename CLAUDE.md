@@ -85,6 +85,7 @@ and extra usage / credits. Design: `docs/design/project-design.md`.
 ## Commands
 
 - `swift build`, `swift test`
+- `swift scripts/make-icon.swift` (redraws `Resources/AppIcon.icns`)
 - `CLAUDE_USAGE_SIGN_IDENTITY=2C7D6068C232BA74073D56085DDBB04E5F14DF30 scripts/build-app.sh [--install]`
 - Release: `CLAUDE_USAGE_SIGN_IDENTITY=2C7D6068C232BA74073D56085DDBB04E5F14DF30 NOTARY_PROFILE=tiler-notary scripts/package.sh`,
   then a GitHub release on `biks2013-tools/claude-usage` (zip + SHA256SUMS) and the cask copied to

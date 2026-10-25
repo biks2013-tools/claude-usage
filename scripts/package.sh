@@ -77,7 +77,7 @@ cask "claude-usage" do
   uninstall quit: "com.giorgosmarinos.claude-usage"
 
   caveats <<~EOS
-    Menu bar: open Claude Usage (gauge icon, no Dock icon). Usage is fetched only
+    Menu bar: open Claude Usage (gauge-and-spark icon, no Dock icon). Usage is fetched only
     when you open the menu or run the command.
 
     Terminal:

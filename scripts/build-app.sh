@@ -16,8 +16,8 @@ if [[ -z "${CLAUDE_USAGE_SIGN_IDENTITY:-}" ]]; then
   exit 1
 fi
 
-VERSION="0.1.1"
-BUILD="2"
+VERSION="0.1.2"
+BUILD="3"
 APP="build/Claude Usage.app"
 
 swift build -c release --arch arm64 --arch x86_64
@@ -26,6 +26,7 @@ BIN="$(swift build -c release --arch arm64 --arch x86_64 --show-bin-path)/Claude
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$BIN" "$APP/Contents/MacOS/ClaudeUsage"
+cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"   # drawn by scripts/make-icon.swift
 cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -35,6 +36,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
   <key>CFBundleName</key><string>Claude Usage</string>
   <key>CFBundleDisplayName</key><string>Claude Usage</string>
   <key>CFBundleExecutable</key><string>ClaudeUsage</string>
+  <key>CFBundleIconFile</key><string>AppIcon</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleShortVersionString</key><string>${VERSION}</string>
   <key>CFBundleVersion</key><string>${BUILD}</string>

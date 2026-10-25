@@ -26,7 +26,7 @@ final class StatusController: NSObject, NSMenuDelegate {
         menu.delegate = self
         menu.autoenablesItems = false
         item.menu = menu
-        item.button?.image = NSImage(systemSymbolName: "gauge.with.dots.needle.33percent", accessibilityDescription: "Claude usage")
+        item.button?.image = StatusIcon.image
         item.button?.toolTip = "Claude subscription usage"
     }
 

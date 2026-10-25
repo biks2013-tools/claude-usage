@@ -3,6 +3,8 @@
 A small macOS menu bar app, and a `claude-usage` command, that shows how much of your Claude
 subscription you have used and lists your open Claude Code sessions.
 
+<img src="Resources/AppIcon-preview.png" width="128" alt="Claude Usage icon">
+
 ## Install
 
 ```sh
@@ -12,7 +14,7 @@ brew install --cask claude-usage
 ```
 
 This installs the app in `/Applications` and the `claude-usage` command. Open **Claude Usage** once
-to put the gauge in the menu bar (and turn on **Open at Login** in its menu if you like).
+to put its icon (a gauge around a spark) in the menu bar (and turn on **Open at Login** in its menu if you like).
 
 ## In the terminal
 
@@ -26,7 +28,7 @@ claude-usage sessions --json
 
 ## In the menu bar
 
-Click the gauge in the menu bar. The menu shows the last answer straight away, asks Anthropic, and
+Click the icon in the menu bar. The menu shows the last answer straight away, asks Anthropic, and
 updates itself a moment later:
 
 - **Plan**, e.g. *Claude Max 20x*.

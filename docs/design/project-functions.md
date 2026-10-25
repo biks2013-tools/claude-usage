@@ -2,7 +2,7 @@
 
 | # | Function | Status |
 |---|----------|--------|
-| F1 | Menu bar gauge; opening the menu checks usage (no polling, no network otherwise). | Done |
+| F1 | Menu bar icon; opening the menu checks usage (no polling, no network otherwise). | Done |
 | F2 | Plan name from Claude Code's Keychain item (`subscriptionType` + `rateLimitTier`). | Done, unit-tested |
 | F3 | Plan limits: 5-hour session, weekly (all models), weekly per model, each with percent, bar (accent / orange / red) and reset time with countdown. | Done, unit-tested |
 | F4 | This week by product (Claude Code, chats, Cowork, other). | Done, unit-tested |
@@ -17,3 +17,4 @@
 | F14 | `claude-usage` command: `usage` (default), `sessions`, `go <n|name|id>`, `--json`, `--version`. | Done, checked live |
 | F15 | Distribution: notarized zip on GitHub releases, Homebrew cask in `biks2013-tools/homebrew-claude-usage` installing the app and the command. | Done |
 | F13 | Reset times shown to the nearest minute (Anthropic sends 05:59:59.9). | Done, unit-tested |
+| F16 | Own icon: gauge-and-spark mark as the app icon (`AppIcon.icns`) and as a template menu bar icon. | Done |
