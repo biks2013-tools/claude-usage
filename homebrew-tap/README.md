@@ -6,6 +6,7 @@ open Claude Code sessions, in the macOS menu bar and as the `claude-usage` comma
 
 ```sh
 brew tap biks2013-tools/claude-usage
+brew trust biks2013-tools/claude-usage   # newer Homebrew asks you to trust third-party taps
 brew install --cask claude-usage
 ```
 

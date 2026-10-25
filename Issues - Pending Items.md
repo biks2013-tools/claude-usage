@@ -15,6 +15,11 @@
 
 ## Completed
 
+- **2026-10-25 — `claude-usage --version` printed "dev" through Homebrew's symlink.** `Bundle.main`
+  is not the app when the executable is reached through `/opt/homebrew/bin/claude-usage`; the version
+  is now read from the bundle of the resolved executable. Released as 0.1.1. Also: newer Homebrew
+  refuses casks from untrusted taps, so the install steps now include `brew trust`.
+
 - **2026-10-25 — `claude-usage` command and Homebrew distribution.** Requested by the user: sign,
   build and publish, installable and usable as a shell command. The app's executable doubles as
   the command (linked by the cask). Checked: `usage`, `sessions`, both `--json` forms, and the

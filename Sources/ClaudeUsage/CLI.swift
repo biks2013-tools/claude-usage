@@ -28,10 +28,19 @@ enum CLI {
             go(args[1...].joined(separator: " "))
         case "help", "-h", "--help": print(help); exit(0)
         case "--version", "version":
-            print("claude-usage \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "dev")")
+            print("claude-usage \(version)")
             exit(0)
         default: fail("unknown command \"\(args[0])\"\n\n\(help)", code: 2)
         }
+    }
+
+    /// The app's version. Run through Homebrew's symlink, Bundle.main is not
+    /// the app, so resolve the executable to its bundle first.
+    private static var version: String {
+        let exe = Bundle.main.executableURL?.resolvingSymlinksInPath()
+        let app = exe?.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+        let info = app.flatMap { Bundle(url: $0)?.infoDictionary } ?? Bundle.main.infoDictionary
+        return info?["CFBundleShortVersionString"] as? String ?? "dev"
     }
 
     static let help = """

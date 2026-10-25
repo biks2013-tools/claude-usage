@@ -16,8 +16,8 @@ if [[ -z "${CLAUDE_USAGE_SIGN_IDENTITY:-}" ]]; then
   exit 1
 fi
 
-VERSION="0.1.0"
-BUILD="1"
+VERSION="0.1.1"
+BUILD="2"
 APP="build/Claude Usage.app"
 
 swift build -c release --arch arm64 --arch x86_64

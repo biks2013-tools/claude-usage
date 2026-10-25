@@ -7,6 +7,7 @@ subscription you have used and lists your open Claude Code sessions.
 
 ```sh
 brew tap biks2013-tools/claude-usage
+brew trust biks2013-tools/claude-usage   # newer Homebrew asks you to trust third-party taps
 brew install --cask claude-usage
 ```
 
