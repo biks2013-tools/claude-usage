@@ -28,9 +28,13 @@ The plan name comes from the Keychain item's public fields: `subscriptionType` (
 - Login Keychain, generic password, service `Claude Code-credentials`; its data is JSON
   `{"claudeAiOauth": {accessToken, refreshToken, expiresAt (ms), subscriptionType, rateLimitTier,
   scopes}}`.
-- Read with `SecItemCopyMatching` on a background queue (the first read shows the Keychain prompt;
-  *Always Allow* sticks while the app's signature stays the same, hence the stable Developer ID
-  signing).
+- Read by running `/usr/bin/security find-generic-password -s "Claude Code-credentials" -w` on a
+  background queue (60 s limit, since a locked keychain asks to be unlocked), the way Claude Code
+  reads it. Not with `SecItemCopyMatching`: the item's partition list holds only `apple-tool:`, and
+  Claude Code rewrites the item through `security` at every token renewal, which resets the list.
+  A direct read therefore asked for the login password again after each renewal ("Always Allow"
+  lasted only until then). `security` is always on the item's access list and partition list.
+  Exit 44 (not found) → not signed in; any other failure → "No access to the Keychain".
 - Read fresh for every check (Claude Code renews the token on its own schedule), used for one
   request, then dropped. `Credentials.description` prints `<hidden>` for the token.
 - Expired (`expiresAt` passed) or 401/403: "Claude Code's sign-in has expired — run claude once".
@@ -115,7 +119,7 @@ Date… (claude.ai billing page); Open at Login (`SMAppService.mainApp`); Quit.
 
 ## Command line (`CLI`)
 
-One executable, two roles, so the Keychain's *Always Allow* (tied to the signature) covers both:
+One executable, two roles:
 started by Launch Services (parent launchd, pid 1) with no arguments it is the menu bar app;
 otherwise it runs a command and exits. The cask links
 `Claude Usage.app/Contents/MacOS/ClaudeUsage` as `claude-usage`.
@@ -165,5 +169,5 @@ Published on GitHub `biks2013-tools/claude-usage` (public) with the tap
 | `Sources/ClaudeUsage/Sessions.swift` | Running tools, the session list, `Navigator` |
 | `Sources/ClaudeUsage/Desktops.swift` | Finding a window's desktop, switching with Mission Control |
 | `scripts/package.sh` | Notarized release zip, checksums, Homebrew cask |
-| `scripts/build-app.sh` | Universal release build, bundle, signing, install |
+| `scripts/build-app.sh` | Universal release build, bundle (in `build.noindex/`, which Spotlight skips), signing, install |
 | `scripts/make-icon.swift` | Draws the app icon → `Resources/AppIcon.icns` (+ a 1024 px preview) |

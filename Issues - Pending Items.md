@@ -15,6 +15,20 @@
 
 ## Completed
 
+- **2026-10-28 — The Keychain asked for the login password again and again.** The item
+  "Claude Code-credentials" has an access list (Claude Usage was on it, from "Always Allow") and a
+  partition list holding only `apple-tool:`. Claude Code rewrites the item through `/usr/bin/security`
+  whenever it renews its token (last on 2026-10-28 12:37), and each rewrite left the partition list
+  at `apple-tool:` only, so a direct `SecItemCopyMatching` read from Claude Usage (team 9F9H8NCAUB)
+  asked for the password again after every renewal. Fix: read the item by running
+  `/usr/bin/security find-generic-password -w`, as Claude Code does; `security` is always allowed.
+  Checked: the read runs without any prompt. The stale ACL entry for an old debug build
+  (`.build/out/Products/Debug/ClaudeUsage`) is harmless and left alone. Released as 0.1.3.
+
+- **2026-10-25 — A second "Claude Usage" in Spotlight and Launchpad.** The build left a copy of the
+  app in the project's `build/` folder, which Spotlight indexed as an app. The copy is deleted and
+  the build now writes to `build.noindex/` (a `.noindex` folder is never indexed). Released as 0.1.3.
+
 - **2026-10-25 — No icon of its own.** The app had no icon (generic in Finder and Login Items) and
   the menu bar used a stock SF Symbol. Added a gauge-and-spark mark: the app icon drawn by
   `scripts/make-icon.swift` (`Resources/AppIcon.icns`) and the same mark as a template menu bar

@@ -16,9 +16,9 @@ if [[ -z "${CLAUDE_USAGE_SIGN_IDENTITY:-}" ]]; then
   exit 1
 fi
 
-VERSION="0.1.2"
-BUILD="3"
-APP="build/Claude Usage.app"
+VERSION="0.1.3"
+BUILD="4"
+APP="build.noindex/Claude Usage.app"   # .noindex: Spotlight and Launchpad skip it
 
 swift build -c release --arch arm64 --arch x86_64
 BIN="$(swift build -c release --arch arm64 --arch x86_64 --show-bin-path)/ClaudeUsage"

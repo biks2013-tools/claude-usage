@@ -64,10 +64,9 @@ opens the billing page on claude.ai, and **Open Usage on claude.ai** opens the u
 
 ## How it gets the numbers
 
-It uses your Claude Code sign-in. Claude Code keeps it in your login Keychain, so the first time
-you open the menu macOS asks whether *Claude Usage* may use *Claude Code-credentials*: enter your
-login password and choose **Always Allow**. The token is used only for that request and is never
-saved or logged.
+It uses your Claude Code sign-in, which Claude Code keeps in your login Keychain. Claude Usage
+reads it the way Claude Code does, through macOS's `security` tool, so there is no Keychain
+prompt. The token is used only for that request and is never saved or logged.
 
 The numbers come from the same service Claude Code's `/usage` uses. Anthropic does not document
 it, so it may change without notice; the app then shows what it still understands, or says the
@@ -88,5 +87,4 @@ CLAUDE_USAGE_SIGN_IDENTITY=<Developer ID SHA-1> scripts/build-app.sh --install
 CLAUDE_USAGE_SIGN_IDENTITY=<Developer ID SHA-1> NOTARY_PROFILE=<profile> scripts/package.sh   # release zip + cask
 ```
 
-Sign with a stable certificate: the Keychain's *Always Allow* is tied to the app's signature.
 **Open at Login** is in the menu.

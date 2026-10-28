@@ -1,5 +1,4 @@
 import Foundation
-import Security
 import UsageCore
 
 /// What went wrong, in words the menu can show.
@@ -26,7 +25,7 @@ enum FetchError: Error {
     var detail: String {
         switch self {
         case .notSignedIn: return "Run claude and sign in with your subscription."
-        case .keychainDenied: return "Open the menu again and choose Always Allow."
+        case .keychainDenied: return "Unlock the login keychain, then try again."
         case .expired, .unauthorized: return "Run claude once; it renews the sign-in."
         case .http: return "Try again in a moment."
         case .network(let why): return why
@@ -51,7 +50,7 @@ final class UsageClient {
 
     func fetch(_ completion: @escaping (Swift.Result<Result, FetchError>) -> Void) {
         let done = { (r: Swift.Result<Result, FetchError>) in DispatchQueue.main.async { completion(r) } }
-        // The Keychain may show its prompt: keep it off the main thread.
+        // Reading the Keychain runs a tool (and may ask to unlock it): keep it off the main thread.
         queue.async {
             let credentials: Credentials
             switch Self.readCredentials() {
@@ -77,21 +76,25 @@ final class UsageClient {
         }
     }
 
+    /// Read through `/usr/bin/security`, as Claude Code itself does. A direct
+    /// Keychain read would be checked against the item's partition list, which
+    /// holds only Apple's tools: every time Claude Code renews its sign-in it
+    /// rewrites the item through `security`, the list goes back to that, and
+    /// macOS would ask for the login password again ("Always Allow" lasting
+    /// only until the next renewal). `security` is always on the list.
     private static func readCredentials() -> Swift.Result<Credentials, FetchError> {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: Credentials.keychainService,
-            kSecMatchLimit as String: kSecMatchLimitOne,
-            kSecReturnData as String: true,
-        ]
-        var item: CFTypeRef?
-        let status = SecItemCopyMatching(query as CFDictionary, &item)
-        switch status {
-        case errSecSuccess:
-            guard let data = item as? Data, let c = Credentials(keychainData: data) else { return .failure(.notSignedIn) }
+        // Generous time limit: a locked keychain makes macOS ask to unlock it.
+        guard let out = Shell.run("/usr/bin/security",
+                                  ["find-generic-password", "-s", Credentials.keychainService, "-w"], timeout: 60) else {
+            return .failure(.keychainDenied)
+        }
+        switch out.status {
+        case 0:
+            let text = out.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard let c = Credentials(keychainData: Data(text.utf8)) else { return .failure(.notSignedIn) }
             return .success(c)
-        case errSecItemNotFound: return .failure(.notSignedIn)
-        default: return .failure(.keychainDenied)   // user refused, or interaction not allowed
+        case 44: return .failure(.notSignedIn)   // errSecItemNotFound
+        default: return .failure(.keychainDenied) // locked keychain left locked, or access refused
         }
     }
 }

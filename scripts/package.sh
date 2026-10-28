@@ -17,7 +17,7 @@ ROOT="$PWD"
 
 VERSION="$(sed -n 's/^VERSION="\(.*\)"$/\1/p' scripts/build-app.sh)"
 BUILD="$(sed -n 's/^BUILD="\(.*\)"$/\1/p' scripts/build-app.sh)"
-APP="$ROOT/build/Claude Usage.app"
+APP="$ROOT/build.noindex/Claude Usage.app"
 DIST="$ROOT/dist"
 ZIP="$DIST/Claude-Usage-$VERSION.zip"
 SUMS="$DIST/SHA256SUMS"
@@ -86,9 +86,9 @@ cask "claude-usage" do
       claude-usage go <n|name>  go to a session
       add --json for machine-readable output
 
-    The first check asks for Keychain access to "Claude Code-credentials" (Claude
-    Code's sign-in): choose Always Allow. Going to a cmux window on another desktop
-    needs Accessibility for Claude Usage once.
+    It reads Claude Code's sign-in from the Keychain through macOS's security tool,
+    without a prompt. Going to a cmux window on another desktop needs Accessibility
+    for Claude Usage once.
   EOS
 end
 CASKEOF

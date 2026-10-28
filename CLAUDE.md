@@ -59,7 +59,7 @@ and extra usage / credits. Design: `docs/design/project-design.md`.
 
 - **No polling.** Usage is fetched only when the user opens the menu; nothing is scheduled.
 - **The token stays secret.** Claude Code's sign-in is read from the login Keychain (service
-  `Claude Code-credentials`) for each check, used for that one request, and never stored, logged,
+  `Claude Code-credentials`, through `/usr/bin/security`, see the design) for each check, used for that one request, and never stored, logged,
   printed or written to a file. `Credentials.description` hides it; keep it that way.
 - **Never refresh the token.** Refreshing rotates the refresh token and would sign Claude Code out.
   An expired token means "run claude once".
