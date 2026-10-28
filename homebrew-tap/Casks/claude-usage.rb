@@ -1,6 +1,6 @@
 cask "claude-usage" do
-  version "0.1.2"
-  sha256 "4e345d7f4bc85595e68eacdde6a24ebfaa2deb01afb75011a8694afd5d8a6f4c"
+  version "0.1.3"
+  sha256 "4abc1a8f41317d3e48cad1b799ff17223d356916b017d12d81015f673c530d31"
 
   url "https://github.com/biks2013-tools/claude-usage/releases/download/v#{version}/Claude-Usage-#{version}.zip"
   name "Claude Usage"
@@ -24,8 +24,8 @@ cask "claude-usage" do
       claude-usage go <n|name>  go to a session
       add --json for machine-readable output
 
-    The first check asks for Keychain access to "Claude Code-credentials" (Claude
-    Code's sign-in): choose Always Allow. Going to a cmux window on another desktop
-    needs Accessibility for Claude Usage once.
+    It reads Claude Code's sign-in from the Keychain through macOS's security tool,
+    without a prompt. Going to a cmux window on another desktop needs Accessibility
+    for Claude Usage once.
   EOS
 end
